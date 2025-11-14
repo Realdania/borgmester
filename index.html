@@ -93,6 +93,8 @@
             <button class="btn" id="exportCsv" disabled>Eksportér valgte som CSV</button>
           </div>
 
+          <p class="muted" id="tableCount">Viser 0 borgmestre</p>
+
           <div class="table-container">
             <table id="tbl">
               <thead>
@@ -167,7 +169,7 @@ function askPasswordModal({
         <h2 style="margin:0 0 10px 0; font-size:18px; color:#FA1E32;">${title}</h2>
         <label style="display:block; margin:0 0 6px 0; font-weight:600;">${label}</label>
         <input id="pwInput" type="password"
-               style="width:100%; padding:9px 10px; border:1px solid #ddd; border-radius:10px; font-size:14px;">
+               style="width:100%; padding:9px 10px; border:1px solid #ddd; border-radius:10px; font-size:14px; box-sizing:border-box;">
         <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:12px;">
           <button id="pwCancel" style="background:#eee; border:none; padding:8px 12px; border-radius:9px; cursor:pointer;">${cancelText}</button>
           <button id="pwOk" style="background:#FA1E32; color:#fff; border:none; padding:8px 12px; border-radius:9px; cursor:pointer;">${confirmText}</button>
@@ -304,10 +306,20 @@ function enforceMaxSelection(onAttemptOver) {
   return true;
 }
 
+// NY: opdaterer lille tekst om antal viste borgmestre
+function updateTableCount(count) {
+  const el = document.getElementById("tableCount");
+  if (!el) return;
+  el.textContent = "Viser " + count + " borgmestre";
+}
+
 function renderTable() {
   const tb = document.querySelector("#tbl tbody");
   tb.innerHTML = "";
   const rows = filteredData();
+
+  // opdatér tæller
+  updateTableCount(rows.length);
 
   for (const r of rows) {
     const tr = document.createElement("tr");
