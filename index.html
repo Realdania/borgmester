@@ -8,6 +8,10 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<!-- html2canvas til billede-eksport -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<!-- SheetJS til ægte Excel-filer -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
     :root { --pad:18px; --font-size:13px; --tbl-height:min(52vh,480px); }
     html, body { min-height:100%; }
@@ -143,7 +147,7 @@
     <div class="content">
       <div class="wrap">
         <div class="panel">
-          <div class="filters"><div class="filters-header">  <h3>Filtrér i tabellen</h3>  <button class="btn small" id="clearFilters">Ryd alle filtre</button></div><div class="facet"><label>Køn</label><div class="checkboxes"><label class="chip"><input type="checkbox" data-facet="Køn" value="K"><span>K</span></label><label class="chip"><input type="checkbox" data-facet="Køn" value="M"><span>M</span></label></div></div><div class="facet"><label>Landsdel</label><div class="checkboxes"><label class="chip"><input type="checkbox" data-facet="Landsdel" value="Fyn og øerne"><span>Fyn og øerne</span></label><label class="chip"><input type="checkbox" data-facet="Landsdel" value="København, Nord- og Østsjælland"><span>København, Nord- og Østsjælland</span></label><label class="chip"><input type="checkbox" data-facet="Landsdel" value="Midtjylland"><span>Midtjylland</span></label><label class="chip"><input type="checkbox" data-facet="Landsdel" value="Nordjylland"><span>Nordjylland</span></label><label class="chip"><input type="checkbox" data-facet="Landsdel" value="Sjælland og øerne"><span>Sjælland og øerne</span></label><label class="chip"><input type="checkbox" data-facet="Landsdel" value="Syd- og Sønderjylland"><span>Syd- og Sønderjylland</span></label></div></div><div class="facet"><label>Område</label><div class="checkboxes"><label class="chip"><input type="checkbox" data-facet="Område" value="1"><span>1</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="2"><span>2</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="3"><span>3</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="4"><span>4</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="5"><span>5</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="6"><span>6</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="7"><span>7</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="8"><span>8</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="9"><span>9</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="10"><span>10</span></label></div></div><div class="facet"><label>Parti</label><div class="checkboxes"><label class="chip"><input type="checkbox" data-facet="Parti" value="A"><span>A</span></label><label class="chip"><input type="checkbox" data-facet="Parti" value="B"><span>B</span></label><label class="chip"><input type="checkbox" data-facet="Parti" value="C"><span>C</span></label><label class="chip"><input type="checkbox" data-facet="Parti" value="F"><span>F</span></label><label class="chip"><input type="checkbox" data-facet="Parti" value="I"><span>I</span></label><label class="chip"><input type="checkbox" data-facet="Parti" value="L"><span>L</span></label><label class="chip"><input type="checkbox" data-facet="Parti" value="V"><span>V</span></label></div></div><div class="facet"><label>Kommunegruppe</label><div class="checkboxes"><label class="chip"><input type="checkbox" data-facet="Kommunegruppe" value="Hovedstadskommuner"><span>Hovedstadskommuner</span></label><label class="chip"><input type="checkbox" data-facet="Kommunegruppe" value="Landkommuner"><span>Landkommuner</span></label><label class="chip"><input type="checkbox" data-facet="Kommunegruppe" value="Oplandskommuner"><span>Oplandskommuner</span></label><label class="chip"><input type="checkbox" data-facet="Kommunegruppe" value="Provinsbykommuner"><span>Provinsbykommuner</span></label><label class="chip"><input type="checkbox" data-facet="Kommunegruppe" value="Storbykommuner"><span>Storbykommuner</span></label></div></div><div class="facet"><label>Tidligere valgt fra valggruppen</label><div class="checkboxes"><label class="chip"><input type="checkbox" data-facet="Tidligere valgt fra valggruppen" value="Ja"><span>Ja</span></label><label class="chip"><input type="checkbox" data-facet="Tidligere valgt fra valggruppen" value="Nej"><span>Nej</span></label></div></div><div class="facet"><label>Anciennitet</label><div class="checkboxes"><label class="chip"><input type="checkbox" data-facet="Anciennitet" value="Genvalgt"><span>Genvalgt</span></label><label class="chip"><input type="checkbox" data-facet="Anciennitet" value="Nyvalgt"><span>Nyvalgt</span></label></div></div><div class="facet"><label>Konstitueringsaftale indgået</label><div class="checkboxes"><label class="chip"><input type="checkbox" data-facet="Konstituering faldet på plads" value="Ja"><span>Ja</span></label></div></div><div class="filters-actions">  <button class="btn" id="quickSelect">Genopstil genvalgte repræsentantskabsmedlemmer</button></div><footer>Senest opdateret: 08.12.2025 kl. 13:49</footer></div>
+          <div class="filters"><div class="filters-header">  <h3>Filtrér i tabellen</h3>  <button class="btn small" id="clearFilters">Ryd alle filtre</button></div><div class="facet"><label>Køn</label><div class="checkboxes"><label class="chip"><input type="checkbox" data-facet="Køn" value="K"><span>K</span></label><label class="chip"><input type="checkbox" data-facet="Køn" value="M"><span>M</span></label></div></div><div class="facet"><label>Landsdel</label><div class="checkboxes"><label class="chip"><input type="checkbox" data-facet="Landsdel" value="Fyn og øerne"><span>Fyn og øerne</span></label><label class="chip"><input type="checkbox" data-facet="Landsdel" value="København, Nord- og Østsjælland"><span>København, Nord- og Østsjælland</span></label><label class="chip"><input type="checkbox" data-facet="Landsdel" value="Midtjylland"><span>Midtjylland</span></label><label class="chip"><input type="checkbox" data-facet="Landsdel" value="Nordjylland"><span>Nordjylland</span></label><label class="chip"><input type="checkbox" data-facet="Landsdel" value="Sjælland og øerne"><span>Sjælland og øerne</span></label><label class="chip"><input type="checkbox" data-facet="Landsdel" value="Syd- og Sønderjylland"><span>Syd- og Sønderjylland</span></label></div></div><div class="facet"><label>Område</label><div class="checkboxes"><label class="chip"><input type="checkbox" data-facet="Område" value="1"><span>1</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="2"><span>2</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="3"><span>3</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="4"><span>4</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="5"><span>5</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="6"><span>6</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="7"><span>7</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="8"><span>8</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="9"><span>9</span></label><label class="chip"><input type="checkbox" data-facet="Område" value="10"><span>10</span></label></div></div><div class="facet"><label>Parti</label><div class="checkboxes"><label class="chip"><input type="checkbox" data-facet="Parti" value="A"><span>A</span></label><label class="chip"><input type="checkbox" data-facet="Parti" value="B"><span>B</span></label><label class="chip"><input type="checkbox" data-facet="Parti" value="C"><span>C</span></label><label class="chip"><input type="checkbox" data-facet="Parti" value="F"><span>F</span></label><label class="chip"><input type="checkbox" data-facet="Parti" value="I"><span>I</span></label><label class="chip"><input type="checkbox" data-facet="Parti" value="L"><span>L</span></label><label class="chip"><input type="checkbox" data-facet="Parti" value="V"><span>V</span></label></div></div><div class="facet"><label>Kommunegruppe</label><div class="checkboxes"><label class="chip"><input type="checkbox" data-facet="Kommunegruppe" value="Hovedstadskommuner"><span>Hovedstadskommuner</span></label><label class="chip"><input type="checkbox" data-facet="Kommunegruppe" value="Landkommuner"><span>Landkommuner</span></label><label class="chip"><input type="checkbox" data-facet="Kommunegruppe" value="Oplandskommuner"><span>Oplandskommuner</span></label><label class="chip"><input type="checkbox" data-facet="Kommunegruppe" value="Provinsbykommuner"><span>Provinsbykommuner</span></label><label class="chip"><input type="checkbox" data-facet="Kommunegruppe" value="Storbykommuner"><span>Storbykommuner</span></label></div></div><div class="facet"><label>Tidligere valgt fra valggruppen</label><div class="checkboxes"><label class="chip"><input type="checkbox" data-facet="Tidligere valgt fra valggruppen" value="Ja"><span>Ja</span></label><label class="chip"><input type="checkbox" data-facet="Tidligere valgt fra valggruppen" value="Nej"><span>Nej</span></label></div></div><div class="facet"><label>Anciennitet</label><div class="checkboxes"><label class="chip"><input type="checkbox" data-facet="Anciennitet" value="Genvalgt"><span>Genvalgt</span></label><label class="chip"><input type="checkbox" data-facet="Anciennitet" value="Nyvalgt"><span>Nyvalgt</span></label></div></div><div class="facet"><label>Konstitueringsaftale indgået</label><div class="checkboxes"><label class="chip"><input type="checkbox" data-facet="Konstituering faldet på plads" value="Ja"><span>Ja</span></label></div></div><div class="filters-actions">  <button class="btn" id="quickSelect">Genopstil genvalgte repræsentantskabsmedlemmer</button></div><footer>Senest opdateret: 09.12.2025 kl. 09:16</footer></div>
         </div>
 
         <div class="panel right">
@@ -172,10 +176,12 @@
               <p class="selected-title">Valgte (0):</p>
               <div class="selected-actions">
                 <button class="btn small" id="autoFill">Fyld automatisk op til 7 (gyldig kombination)</button>
-                <button class="btn small" id="exportCsv" disabled>Eksportér valgte som CSV</button>
+                <button class="btn small" id="exportExcel" disabled>Eksportér til Excel</button>
+                <button class="btn small" id="exportImage" disabled>Eksportér som billede</button>
                 <button class="btn small" id="clearSelectedAll">Ryd alle valgte</button>
               </div>
             </div>
+
             <table id="tblSelected">
               <thead>
                 <tr>
@@ -185,6 +191,8 @@
               </thead>
               <tbody></tbody>
             </table>
+
+            <div id="autoMsg" class="auto-msg" style="display:none;"></div>
           </div>
 
           <div class="kpi panel">
@@ -202,7 +210,6 @@
               <div class="kpi-box"><div class="label">Område</div><div class="value" id="kpi_omraade">-</div></div>
             </div>
             <div class="limit-msg" id="limitMsg">Du kan højest vælge 7.</div>
-            <div id="autoMsg" style="margin-top:4px; font-size:11.5px; color:#5A5A5A; display:none;"></div>
           </div>
         </div>
       </div>
@@ -370,18 +377,17 @@ function initBaseSets() {
     const reprOk = (harRepr === "Nej");
     const ageOk = !Number.isNaN(ageNum) && ageNum < MAX_AGE;
 
-    // NYT: markér de faste borgmestre eksplicit
     if (isRequired) {
       REQUIRED_IDS.add(idx);
     }
 
-    // BASE_IDS = df_base: enten fastlåst, eller (repræsenteret == Nej og alder < 70)
+    // BASE_IDS: alle der kan indgå (faste uanset alder/har_repr, andre kun hvis reprOk & ageOk)
     if (isRequired || (reprOk && ageOk)) {
       BASE_IDS.add(idx);
       if (gruppe) kgSet.add(gruppe);
     }
 
-    // CANDIDATE_IDS = df_candidates: df_base uden de faste, kun ALLOWED_PARTIES
+    // CANDIDATE_IDS: kun ikke-faste, reprOk, ageOk, i ALLOWED_PARTIES
     if (!isRequired && reprOk && ageOk && ALLOWED_PARTIES.includes(parti)) {
       CANDIDATE_IDS.push(idx);
     }
@@ -391,7 +397,7 @@ function initBaseSets() {
   ALL_KG_GROUPS_COUNT = kgSet.size;
 }
 
-// EKSPPLICIT filtreringslogik pr. facet – alt sammenlignes som tekst
+// Filtreringslogik
 function matchesFilters(row) {
   const f = state.filters;
 
@@ -439,7 +445,6 @@ function enforceMaxSelection(onAttemptOver) {
   return true;
 }
 
-// opdaterer lille tekst om antal viste borgmestre
 function updateTableCount(count) {
   const el = document.getElementById("tableCount");
   if (!el) return;
@@ -451,7 +456,6 @@ function renderTable() {
   tb.innerHTML = "";
   const rows = filteredData();
 
-  // opdatér tæller
   updateTableCount(rows.length);
 
   for (const r of rows) {
@@ -510,7 +514,6 @@ function renderSelectedTable() {
 
   if (ids.length === 0) {
     container.style.display = "none";
-    return;
   } else {
     container.style.display = "block";
   }
@@ -604,17 +607,52 @@ function updateKPIs() {
 }
 
 function updateExportButton() {
-  const btn = document.getElementById("exportCsv");
-  if (!btn) return;
-  btn.disabled = state.selectedIds.size === 0;
+  const btnExcel = document.getElementById("exportExcel");
+  const btnImage = document.getElementById("exportImage");
+  const disabled = state.selectedIds.size === 0;
+  if (btnExcel) btnExcel.disabled = disabled;
+  if (btnImage) btnImage.disabled = disabled;
 }
 
-function exportSelectedCSV() {
+function exportSelectedExcel() {
   const rows = Array.from(state.selectedIds).map(id => DATA[id]);
   if (!rows.length) return;
 
-  const header = TABLE_COLS;
+  // Hvis XLSX-lib er tilgængelig, laver vi en rigtig .xlsx-fil,
+  // ellers falder vi tilbage til CSV.
+  if (typeof XLSX !== "undefined") {
+    const data = [];
+    for (const r of rows) {
+      const obj = {};
+      obj["Valgt"] = "Ja";
+      for (const col of TABLE_COLS) {
+        obj[col] = r[col];
+      }
+      data.push(obj);
+    }
 
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Udvalgte");
+
+    const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blob = new Blob(
+      [wbout],
+      { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }
+    );
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "udvalgte_borgmestre.xlsx";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    return;
+  }
+
+  // Fallback: CSV
+  const header = TABLE_COLS;
   function csvEscape(v) {
     const s = (v === null || v === undefined) ? "" : String(v);
     if (s.includes('"') || s.includes(',') || s.includes('\n')) {
@@ -622,14 +660,12 @@ function exportSelectedCSV() {
     }
     return s;
   }
-
   const lines = [];
   lines.push(["Valgt", ...header].join(","));
   for (const r of rows) {
     const line = ["Ja", ...header.map(k => csvEscape(r[k]))].join(",");
     lines.push(line);
   }
-
   const blob = new Blob([lines.join("\n")], { type:"text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -641,15 +677,38 @@ function exportSelectedCSV() {
   URL.revokeObjectURL(url);
 }
 
-// === KOMBINATIONSLOGIK PÅ KLIENTEN (enumerér alle gyldige m. de valgte) ===
+function exportSelectedImage() {
+  const table = document.getElementById("tblSelected");
+  if (!table) return;
+
+  if (typeof html2canvas === "undefined") {
+    alert("Kan ikke eksportere som billede (html2canvas mangler).");
+    return;
+  }
+
+  // Screenshot kun af tabellen (uden knapper og beskrivelse)
+  html2canvas(table, { backgroundColor: "#ffffff" }).then(canvas => {
+    canvas.toBlob(blob => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "udvalgte_borgmestre.png";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  });
+}
+
+// === KOMBINATIONSLOGIK PÅ KLIENTEN ===
 
 function comboMeetsConstraints(idSet) {
   const rows = Array.from(idSet).map(id => DATA[id]);
 
-  // --- Faste borgmestre ---
   const others = rows.filter(r => !REQUIRED_NAMES.includes(str(r[K_BORGMESTER])));
 
-  // --- Partilogik ---
   const partyCounts = {A:0, V:0, C:0, I:0, F:0};
   for (const r of rows) {
     const p = str(r[K_PARTI]);
@@ -664,15 +723,13 @@ function comboMeetsConstraints(idSet) {
   const has_I = cnt_I > 0;
 
   const allowedPatterns = new Set();
-  allowedPatterns.add("2,2,2,1"); // baseline
-
+  allowedPatterns.add("2,2,2,1");
   if (has_I) {
     allowedPatterns.add("2,1,2,2");
     allowedPatterns.add("2,2,1,2");
     allowedPatterns.add("3,1,2,1");
     allowedPatterns.add("3,2,1,1");
   }
-
   const patternKey = `${cnt_A},${cnt_V},${cnt_C},${total_IF}`;
   if (!allowedPatterns.has(patternKey)) return false;
 
@@ -680,7 +737,6 @@ function comboMeetsConstraints(idSet) {
     if (!(cnt_I >= 1 && cnt_F >= 1)) return false;
   }
 
-  // --- Køn: forskel max 1 ---
   let mCount = 0, kCount = 0;
   for (const r of rows) {
     const g = str(r[K_KOEN]);
@@ -689,27 +745,27 @@ function comboMeetsConstraints(idSet) {
   }
   if (Math.abs(mCount - kCount) > 1) return false;
 
-  // --- Anciennitet: 4/3 eller 5/2 i Genvalgts favør ---
   let gCount = 0, nCount = 0;
   for (const r of rows) {
     const a = str(r[K_ANCI]);
     if (a === "Genvalgt") gCount++;
     if (a === "Nyvalgt") nCount++;
   }
-  if (!((gCount === 4 && nCount === 3) || (gCount === 5 && nCount === 2))) return false;
+  if (!(
+    (gCount === 4 && nCount === 3) ||
+    (gCount === 5 && nCount === 2) ||
+    (gCount === 3 && nCount === 4)
+  )) return false;
 
-  // --- Har været repræsenteret = "Nej" for de andre (ikke de faste) ---
   for (const r of others) {
     if (str(r[K_HARREPR]) !== "Nej") return false;
   }
 
-  // --- Alder < 70 for de andre ---
   for (const r of others) {
     const age = parseAge(r);
     if (!Number.isNaN(age) && age >= MAX_AGE) return false;
   }
 
-  // --- Område-regel ---
   const areaCounts = new Map();
   for (const r of rows) {
     const a = str(r[K_OMRAADE]);
@@ -728,7 +784,6 @@ function comboMeetsConstraints(idSet) {
   if (countAreaDouble > 2) return false;
   if (countAreaDouble === 2 && !hasEmil) return false;
 
-  // --- Kommunegruppe: nogenlunde fordeling ---
   const kgCounts = new Map();
   for (const r of rows) {
     const g = str(r[K_GRUPPE]);
@@ -750,8 +805,8 @@ function comboMeetsConstraints(idSet) {
 
 function generateCombosWithSelected(maxResults = 5000, maxVisited = 200000) {
   const res = {
-    combos: [],      // hver combo er et array af ids (fulde 7'ere)
-    complete: true,  // false hvis vi ramte maxVisited før udtømning
+    combos: [],
+    complete: true,
     visited: 0,
     status: ""
   };
@@ -860,10 +915,21 @@ function autoFillFromRules() {
     return;
   }
 
+  const startingIds = new Set([...REQUIRED_IDS, ...state.selectedIds]);
+  const selectedNames = Array.from(startingIds)
+    .map(id => str(DATA[id][K_BORGMESTER]))
+    .filter(n => n && n.trim() !== "")
+    .join(", ");
+
   if (msgEl) {
-    let txt = "Der findes " + result.combos.length + " gyldige kombinationer med de valgte borgmestre.";
+    let txt = "Der findes " + result.combos.length + " gyldige kombinationer med de valgte borgmestre";
+    if (selectedNames) {
+      txt += " (valgte: " + selectedNames + ")";
+    }
     if (!result.complete) {
-      txt += " (Vi stoppede ved en søgegrænse; der kan være flere.)";
+      txt += " (vi stoppede ved en søgegrænse; der kan være flere).";
+    } else {
+      txt += ".";
     }
     msgEl.textContent = txt;
     msgEl.style.display = "block";
@@ -908,7 +974,6 @@ function attachEvents() {
     renderTable();
   });
 
-  // Quickselect: kun de tre kommuner, hvor Anciennitet = "Genvalgt"
   document.getElementById("quickSelect").addEventListener("click", () => {
     const rows = DATA
       .map((r, idx) => ({ ...r, __id: idx }))
@@ -929,7 +994,15 @@ function attachEvents() {
     renderTable();
   });
 
-  document.getElementById("exportCsv").addEventListener("click", exportSelectedCSV);
+  const btnExcel = document.getElementById("exportExcel");
+  if (btnExcel) {
+    btnExcel.addEventListener("click", exportSelectedExcel);
+  }
+
+  const btnImage = document.getElementById("exportImage");
+  if (btnImage) {
+    btnImage.addEventListener("click", exportSelectedImage);
+  }
 
   const autoBtn = document.getElementById("autoFill");
   if (autoBtn) {
@@ -937,7 +1010,7 @@ function attachEvents() {
   }
 }
 
-// Init — hent krypterede data, dekrypter, og kør
+// Init
 window.addEventListener('DOMContentLoaded', async () => {
   try {
     DATA = await loadDataEncrypted();
